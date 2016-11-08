@@ -85,6 +85,8 @@ def find_gce(duration=1, first_only=True):
 
         n += 1
 
+    s.close()
+
     return gce
 
 
