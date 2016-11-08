@@ -9,6 +9,7 @@ Nécessite le module [Requests](http://docs.python-requests.org/).
 Les modules Teleinfo écoutent sur le port UDP 30303. Lorsqu'ils reçoivent une trame en broadcast contenant le texte 'Discover GCE Devices', ils envoient une réponse.
 
 La réponse est composée de trois lignes faciles à analyser:
+
     NOM<CR><LF>
     ADRESSE MAC<CR><LF>
     PORT<CR><LF>
