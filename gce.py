@@ -1,13 +1,19 @@
 #! /usr/bin/env python3
 # coding: utf-8
-# vim:set ts=4 st=4 et:
+# vim:set ts=4 sw=4 et:
 
 # René 2016/11/07
 
+from __future__ import print_function
+import sys
 import socket
 import select
 import xml.sax
 import requests
+
+if sys.version_info[0] == 2:
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
 
 # cf. la documentation de GCE Electronics et celle d'ERDF
 TELEINFO_ERDF = {
@@ -54,10 +60,10 @@ TELEINFO_ERDF = {
 # @brief cherche les équipements GCE sur le réseau local
 #
 # @param duration       durée de recherche (1 seconde par défaut)
-# @param first_only     si True, retourne dès le premier équipement trouvé
+# @param name           nom du device à chercher ou * pour tous ou None pour le premier trouvé
 #
 # @return un tableau de [ IP, NOM, MAC, PORT ]
-def find_gce(duration=1, first_only=True):
+def find_gce(duration=1, name=None):
 
     gce = []
 
@@ -78,10 +84,12 @@ def find_gce(duration=1, first_only=True):
                 data = data.decode('ascii')
             data = data.split('\r\n')[0:-1]
             data = [ addr[0] ] + [ str.strip(i) for i in data ]
-            gce.append(data)
 
-            if first_only:
+            if name is None or data[1].lower() == name.lower():
+                gce.append(data)
                 break
+            elif name == '*':
+                gce.append(data)
 
         n += 1
 
@@ -97,7 +105,7 @@ def find_gce(duration=1, first_only=True):
 #
 # @return None si aucun module n'est trouvé ou un tableau [ IP, NOM, MAC, PORT ]
 def find_first_gce(duration=1):
-    gce = find_gce(duration, True)
+    gce = find_gce(duration)
     return None if len(gce) == 0 else gce[0]
 
 
@@ -143,10 +151,13 @@ def teleinfo(numero=1):
 
 
 if __name__ == '__main__':
-    import sys
-    if len(sys.argv) == 2 and sys.argv[1] == 'find':
-        gce = find_first_gce()
-        print("{}:{}".format(gce[0], gce[3]))
+    if len(sys.argv) >= 2 and sys.argv[1] == 'find':
+        name = None
+        if len(sys.argv) > 2: name = sys.argv[2]
+        t = find_gce(name=name)
+        if len(t) > 0:
+            t = t[0]
+            print("{}:{}".format(t[0], t[3]))
     else:
         print("Test GCE")
         print(find_first_gce())

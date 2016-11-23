@@ -3,7 +3,7 @@ Script Python pour interroger un module [Teleinfo de GCE Electronics](http://gce
 
 Documentation ERDF sur la [téléinformation client](http://www.enedis.fr/sites/default/files/ERDF-NOI-CPT_02E.pdf).
 
-Nécessite le module [Requests](http://docs.python-requests.org/).
+Nécessite le module [Requests](http://python-requests.org/) (voir [ici](https://github.com/rene-d/netatmo#installation-on-a-synology-nas) pour installer facilement sur un Synology).
 
 ## Détection
 Les modules Teleinfo écoutent sur le port UDP 30303. Lorsqu'ils reçoivent une trame en broadcast contenant le texte 'Discover GCE Devices', ils envoient une réponse.
@@ -21,8 +21,11 @@ Les valeurs de téléinformation client sont extraites de http://ECO-DEVICES/pro
 
 ### Retrouver l'adresse IP du module teleinfo:
 
-    $ ./gce.py find
-    $ curl "http://$(./gce.py find)/api/xdevices.json?cmd=10"
+    ./gce.py find [nom du device]
+
+Exemple d'utilisation:
+
+    curl "http://$(./gce.py find)/api/xdevices.json?cmd=10"
 
 ### Afficher tous les champs
 
@@ -33,5 +36,4 @@ Les valeurs de téléinformation client sont extraites de http://ECO-DEVICES/pro
     #! /usr/bin/env python3
     import gce
     print(gce.teleinfo())
-
 
