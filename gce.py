@@ -162,7 +162,7 @@ def teleinfo(numero=1):
     return handler.values
 
 
-def _main():
+def main():
     """
         fonction principale
     """
@@ -186,5 +186,4 @@ def _main():
             print("%20s : %-14s %s" % (key, value, text))
 
 if __name__ == '__main__':
-    _main()
-
+    main()
