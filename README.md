@@ -1,7 +1,7 @@
 # gce.py
 Script Python pour interroger un module [Teleinfo de GCE Electronics](http://gce-electronics.com/fr/carte-et-module-relais-serveur-ethernet/409-teleinformation-ethernet-ecodevices.html).
 
-Documentation ERDF sur la [téléinformation client](http://www.enedis.fr/sites/default/files/ERDF-NOI-CPT_02E.pdf).
+Documentation ERDF sur la [téléinformation client](https://www.enedis.fr/sites/default/files/Enedis-NOI-CPT_02E.pdf).
 
 Nécessite le module [Requests](http://python-requests.org/) (voir [ici](https://github.com/rene-d/netatmo#installation-on-a-synology-nas) pour installer facilement sur un Synology).
 
