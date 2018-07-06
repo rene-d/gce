@@ -141,7 +141,7 @@ class _TeleinfoParser(xml.sax.handler.ContentHandler):
             self.data = None
 
 
-def teleinfo(numero=1):
+def teleinfo(numero=1, gce=None):
     """
         retourne un dict contenant la téléinfo du premier module détecté
 
@@ -150,7 +150,8 @@ def teleinfo(numero=1):
     """
     assert numero == 1 or numero == 2
 
-    gce = find_first_gce()
+    if gce is None:
+        gce = find_first_gce()
     if gce is None:
         return
 
@@ -160,6 +161,57 @@ def teleinfo(numero=1):
     handler = _TeleinfoParser("T{}_".format(numero))
     xml.sax.parseString(data.text, handler)
     return handler.values
+
+
+def status(gce=None):
+    """
+        retourne un dict contenant le status.xml du premier module détecté
+        c'est la requête qui est effectuée en permanence par la page web du module
+
+        return  un dict avec les valeurs ou None
+    """
+
+    if gce is None:
+        gce = find_first_gce()
+    if gce is None:
+        return
+
+    url = "http://{}:{}/status.xml".format(gce[0], gce[3])
+    data = requests.get(url)
+
+    handler = _TeleinfoParser("")
+    xml.sax.parseString(data.text, handler)
+    return handler.values
+
+
+def donnees(gce=None):
+    """
+        retourne le résumé des données de l'Eco-Devices
+    """
+    if gce is None:
+        gce = find_first_gce()
+    if gce is None:
+        return
+
+    url = "http://{}:{}/api/xdevices.json?cmd=10".format(gce[0], gce[3])
+    data = requests.get(url)
+    if data.status_code == 200:
+        return data.json()
+
+
+def compteurs(gce=None):
+    """
+        retourne les valeurs des compteurs C1 et C2 du premier module détecté
+    """
+    if gce is None:
+        gce = find_first_gce()
+    if gce is None:
+        return
+
+    url = "http://{}:{}/api/xdevices.json?cmd=20".format(gce[0], gce[3])
+    data = requests.get(url)
+    if data.status_code == 200:
+        return data.json()
 
 
 def main():
@@ -177,13 +229,34 @@ def main():
             print("{}:{}".format(data[0], data[3]))
     else:
         print("Test GCE")
-        print(find_first_gce())
-        for key, value in sorted(teleinfo().items()):
+        gce = find_first_gce()
+        print("Device:", gce)
+
+        # teleinfo
+        print("Teleinfo:")
+        for key, value in sorted(teleinfo(gce=gce).items()):
             text = '?'
             for i, j in TELEINFO_ERDF.items():
                 if key.endswith(i):
                     text = j
             print("%20s : %-14s %s" % (key, value, text))
+        
+        # compteurs
+        cpt = compteurs(gce=gce)
+        print("Compteurs:")
+        print("%20s : %-14s %s" % ("C1", cpt['Day_C1'], 'Compteur 1'))
+        print("%20s : %-14s %s" % ("C2", cpt['Day_C2'], 'Compteur 2'))
+
+        # # résumé des données
+        # data = donnees(gce=gce)
+        # for key, value in sorted(data.items()):
+        #     print("%20s : %-14s" % (key, value))
+
+        # # status
+        # data = status(gce=gce)
+        # for key, value in sorted(data.items()):
+        #     print("%20s : %-14s" % (key, value))
+
 
 if __name__ == '__main__':
     main()
