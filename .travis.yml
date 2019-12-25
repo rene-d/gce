@@ -12,7 +12,7 @@ deploy:
   user: __token__
   password:
     secure: EaWd9T/1BzbdO81Qz06em/gMZAuk1k7PI09+1Pb3zxq5ouvBk822aYK/+JSHR+shXd7irnjUxw3qTwoRxBQ91TJ9/GdG2Ssw/0NhDINHFy94mjRnnNntF5EvEU8PG+kSwfUYbsvgudLLCe34BRO96fFUv7aWtwmoFvkizOzkAz3/45Y13WC3wNa3ngbt4yja4lAiBFk/PwikyDmppQYjfl3ytouuPNj4VReR/BpPihWu391bC5v7MkBPWGtyaAEiCap3EjO0kfMz+hVv6qvqiZMibSKN7gomoDi5ZkhmZkUrbU/BaLxr8Gtt3VTaK6Ry55pSCrGuNNsdTeB/0vHCWmyLMQj+ouXzWpwRORaCmPyBVkUVCzhnLBjkBSUaOoLc67GdH5CSjBv3PL0YarH2N/JNjySpLs0+b4P7YzucE1RANGRaFJdFomlD6AffCZ3GmFcUmS+jrUeccefBlwEGvS4Y2kkjufu/hV2453/miONv6b1e+WiqS63/p08v8m76/TPk06nODEtAoVrf6Eo/wizv3otEuGO4WY3PehM6GR/S7VY7oPR7EaPCw2yYZR/1mLBNoFrXHUEFgz2+yIToGAn018ePTAwt+r2qQIst+3lqG5Np0RuQv71Jr234QLVWIsDqot5IoFzFYYBd6SMR9M9pSAteczvwrstwO4nEINg=
-  distributions: sdist bdist_wheel bdist_egg
+  distributions: sdist bdist_wheel
   skip_existing: true
 script:
 - echo "Done"
