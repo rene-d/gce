@@ -1,0 +1,21 @@
+language: python
+python:
+- 3.5
+- 3.6
+- 3.7
+- 3.8
+install:
+- pip install -r requirements.txt
+- python setup.py install
+deploy:
+  provider: pypi
+  user: __token__
+  password:
+    secure: cCdPs4bP0fnXX+mTvyxCR7C2zNqAvqEH7pAK5EvI32dICVwJ+OjubkN/GIcveooBTJ6OjCG8fHaBvIeZx7tMF001neFxOpUxSCpWLQ9BwQUy93F43urOUHMRJyL+M9bP/XgZhBsvblFiPiVGVU3EBBgiPpdxghhsyVuC0Gl9gVsORXoCc28leJ3oW1YlYj6Nqlqt45k5FRy1L/DUl3y+9c0FITKo/yVCWOWHV20VUp6MXEh57u+aV8h4ZTVMR21+yvy1Mip2+e+YQmIF3bYDNMY36GGduCpORPpjh5a8q665gqBnGpRQBJ85ynP0CFP1MXw6YeorplhJGPTkuN8wQgbhBqT9GFsNQ5O6j7ImuuTOboiPQta3O0NHrEXWpPTV2Ptlz8SY0USGp/ORkC6Uo79KhIrihPHVQtZ8nZLNxtwdADTtpXB2pcjfTFQQx4NOvACJFe7JTXdstepVSD64cJiAM9GeXCNDusB/nHqBr9/gKrbPbHsYPhS9j4f/A30sZ7ad2XDMkGT8LO9sEDO0awoNX1Wzr6XQzHdIL/u8kklVRNn0XLwgzWQsEDHaLYB9bfTr4dEB3lssrzj9ZqKa8m6lYTlJiWn1wbiBEmQ6Quz5NtHZ0Q0VD36C8RcDVEyWFTPbQ+3Ss5Dl6Eh7FlLlU+vBZZpnsdfgtcvSf5Ey3W0=
+  distributions: sdist bdist_wheel bdist_egg
+  skip_existing: true
+  on:
+    branch: develop
+  server: https://test.pypi.org/legacy/
+script:
+- echo "Done"
