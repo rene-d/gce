@@ -53,3 +53,4 @@ Exemple d'utilisation:
 ## Licence et garantie
 
 Aucune. Vous pouvez réutiliser le script sans restriction. Il est fourni "tel quel", sans aucune garantie.
+
